@@ -1,8 +1,8 @@
 #! /bin/bash
 
 # Check the input args
-if [ ! $# == 1 ]; then
-echo "Usage: $0 cfgfile"
+if [ ! $# == 3 ]; then
+echo "Usage: $0 cfgfile XSize Ysize"
 exit
 fi
 
@@ -10,8 +10,8 @@ fi
 cfgfile=$1
 
 # The initial dimensions of a flat polycrystalline graphene
-#int_X=$1
-#int_Y=$2
+XSize=$2
+YSize=$3
 
 
 # obtain the dimensions of relaxed polycrystalline graphene
@@ -37,18 +37,24 @@ YLlo=-$YLhi
 # load the ovito 3.0.0 according to your situation.
 module load ovito/3.0.0dev
 
+# remove the temp files
+rm -rf tmp.Xnum tmp.Ynum
+
 # When the lines are along x-axis, obtain the grain numbers
-echo "When the lines are along x-axis, obtain the grain numbers:"
 for i in `seq $YLlo 50 $YLhi`
 do
-  ovitos linecut-cfg.py $cfgfile Y $i $[$i+$linewidth]
+  ovitos linecut-cfg.py $cfgfile Y $i $[$i+$linewidth] >> tmp.Xnum
 done
-
-echo ""
 
 # When the lines are along y-axis, obtain the grain numbers
 echo "When the lines are along y-axis, obtain the grain numbers:"
 for i in `seq $XLlo 50 $XLhi`
 do
-  ovitos linecut-cfg.py $cfgfile X $i $[$i+$linewidth]
+  ovitos linecut-cfg.py $cfgfile X $i $[$i+$linewidth] >> tmp.Ynum
 done
+
+cat tmp.Xnum|awk '{sum+=$1} END {print "X-axis Average number = ", sum/NR}'
+cat tmp.Ynum|awk '{sum+=$1} END {print "Y-axis Average number = ", sum/NR}'
+
+# remove the temp files
+rm -rf tmp.Xnum tmp.Ynum
