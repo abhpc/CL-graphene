@@ -1,8 +1,8 @@
 #! /bin/bash
 
 # Check the input args
-if [ ! $# == 3 ]; then
-echo "Usage: $0 cfgfile XSize Ysize"
+if [ ! $# == 4 ]; then
+echo "Usage: $0 cfgfile XSize Ysize interval"
 exit
 fi
 
@@ -22,7 +22,7 @@ YL=`head $cfgfile | grep "H0(2,2)"|awk '{print $3}'|cut -d '.' -f1`
 linewidth=3
 
 # define the interval distance between lines
-interval=50
+interval=$4
 Doubleinterval=$[$interval*2]
 
 # The maximum and minimum X
@@ -42,13 +42,13 @@ export DISPLAY=""
 rm -rf tmp.Xnum tmp.Ynum
 
 # When the lines are along x-axis, obtain the grain numbers
-for i in `seq $YLlo 50 $YLhi`
+for i in `seq $YLlo $interval $YLhi`
 do
   ovitos linecut-cfg.py $cfgfile Y $i $[$i+$linewidth] >> tmp.Xnum
 done
 
 # When the lines are along y-axis, obtain the grain numbers
-for i in `seq $XLlo 50 $XLhi`
+for i in `seq $XLlo $interval $XLhi`
 do
   ovitos linecut-cfg.py $cfgfile X $i $[$i+$linewidth] >> tmp.Ynum
 done
