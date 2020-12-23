@@ -1,6 +1,8 @@
 # LineCut analysis of polycrystalline graphene
 Line cut method to estimate the average grain size of polycrystalline graphene.
 
+*IMPORTANT: this program can be accurate when analyzing a polycrystalline graphene with over 25 grains. If the grains of polycrystalline graphene sheet are less than 25, you can count them handly.
+
 [Ovito 3.0.0-dev422](https://www.ovito.org/) is used for the microstructure analysis of polycrystalline graphene, and we have added it into our environment modules. Thus, we can use it by the command below:
 ```
 $ module load ovito/3.0.0dev
