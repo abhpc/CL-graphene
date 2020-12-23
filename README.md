@@ -24,5 +24,4 @@ The average grain size along x-axis: 8.717939776.
 The average grain size along y-axis: 9.189149452.
 
 The average grain size: 8.950444208.
-
 ```
