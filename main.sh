@@ -34,8 +34,9 @@ YLhi=$[$YL/$Doubleinterval*$interval-$interval]
 YLlo=-$YLhi
 
 
-# load the ovito 3.0.0 according to your situation.
+# load the ovito 3.0.0 according to your situation. In addition, give a null value to "DISPLAY" for non-graphical computing environment (e.g., running on a cluster).
 module load ovito/3.0.0dev
+export DISPLAY=""
 
 # remove the temp files
 rm -rf tmp.Xnum tmp.Ynum
@@ -55,8 +56,19 @@ done
 aveXnum=`cat tmp.Xnum|awk '{sum+=$1} END {print sum/NR}'`
 aveYnum=`cat tmp.Ynum|awk '{sum+=$1} END {print sum/NR}'`
 
-echo "The average grain number along x-axis: $aveXnum."
-echo "The average grain number along y-axis: $aveYnum."
-
 # remove the temp files
 rm -rf tmp.Xnum tmp.Ynum
+
+# compute the average grain size
+grainXsize=`echo "scale=9; $XSize/$aveXnum" | bc`
+grainYsize=`echo "scale=9; $YSize/$aveYnum" | bc`
+grainsize=`echo "scale=9; sqrt($XSize*$YSize/($aveXnum*$aveYnum))" | bc`
+
+# print the results
+echo "The average grain number along x-axis: $aveXnum."
+echo "The average grain number along y-axis: $aveYnum."
+echo ""
+echo "The average grain size along x-axis: $grainXsize."
+echo "The average grain size along y-axis: $grainYsize."
+echo ""
+echo "The average grain size: $grainsize."
