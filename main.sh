@@ -47,14 +47,16 @@ do
 done
 
 # When the lines are along y-axis, obtain the grain numbers
-echo "When the lines are along y-axis, obtain the grain numbers:"
 for i in `seq $XLlo 50 $XLhi`
 do
   ovitos linecut-cfg.py $cfgfile X $i $[$i+$linewidth] >> tmp.Ynum
 done
 
-cat tmp.Xnum|awk '{sum+=$1} END {print "X-axis Average number = ", sum/NR}'
-cat tmp.Ynum|awk '{sum+=$1} END {print "Y-axis Average number = ", sum/NR}'
+aveXnum=`cat tmp.Xnum|awk '{sum+=$1} END {print sum/NR}'`
+aveYnum=`cat tmp.Ynum|awk '{sum+=$1} END {print sum/NR}'`
+
+echo "The average grain number along x-axis: $aveXnum."
+echo "The average grain number along y-axis: $aveYnum."
 
 # remove the temp files
 rm -rf tmp.Xnum tmp.Ynum
