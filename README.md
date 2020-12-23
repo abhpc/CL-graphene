@@ -7,16 +7,16 @@ $ module load ovito/3.0.0dev
 ```
 You should configure your ovito modulefiles accordingly. Or you can simply add the ovito directories into the environmental value PATH.
 
-The usage of script "main.sh" is:
+The usage of script "linecutGr.sh" is:
 ```
 $ chmod +x linecutGr.sh
-$ ./linecutGr.sh  [cfg file]   [Xsize]  [Ysize]
+$ ./linecutGr.sh  [cfg file]   [Xsize]  [Ysize]  [interval]
 ```
 Here "Xsize" and "Ysize" are the dimensions of a flat polycrystalline graphene.
 
 A example is given below:
 ```
-$ ./linecutGr.sh relax.90000.cfg 100 100
+$ ./linecutGr.sh relax.90000.cfg 100 100 50
 The average grain number along x-axis: 11.4706.
 The average grain number along y-axis: 10.8824.
 
